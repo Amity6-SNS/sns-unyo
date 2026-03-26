@@ -1,295 +1,462 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amity6 | 介護福祉特化型SNSブランディング</title>
+    <title>Amity6 | 介護福祉業界に特化したSNSブランディング・運用代行</title>
+    <meta name="description" content="「人が辞めなくなる広報」を。Amity6は介護福祉業界に特化したSNSブランディング・運用代行サービスです。現場の想いを可視化し、選ばれる施設づくりを伴走支援します。">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.org"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         brand: {
-                            light: '#FDF2F4',
-                            DEFAULT: '#F06292',
-                            dark: '#E91E63',
-                        },
-                        stone: {
-                            50: '#F9F8F7',
-                            900: '#1C1917',
+                            bg: '#FCF9F9',      // 全体の背景（極めて淡いピンクグレー）
+                            white: '#FFFFFF',   // セクション背景用
+                            primary: '#E2C2C2', // メインの淡いピンク
+                            secondary: '#D4A8A8',// 少し濃いピンク（ホバー等）
+                            text: '#4A4545',    // メインテキスト（墨色・チャコール）
+                            muted: '#8B8484',   // サブテキスト
+                            border: '#F0E6E6'   // 境界線
                         }
                     },
                     fontFamily: {
-                        sans: ['Noto Sans JP', 'sans-serif'],
-                        serif: ['Shippori Mincho', 'serif'],
+                        serif: ['"Noto Serif JP"', 'serif'],
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                    },
+                    spacing: {
+                        'section': '8rem', // セクション間のゆったりとした余白
                     }
                 }
             }
         }
     </script>
     <style>
-        html { scroll-behavior: smooth; }
-        body { font-feature-settings: "palt"; }
-        .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-        .bg-pale-pink { background-color: #FFFBFC; }
+        body {
+            background-color: theme('colors.brand.bg');
+            color: theme('colors.brand.text');
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* ふわっと浮き上がるアニメーション用のユーティリティ */
+        .fade-in {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
-<body class="bg-pale-pink text-stone-800 leading-relaxed">
+<body class="font-sans font-light leading-relaxed tracking-wide">
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-pink-50">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <img src="https://www.genspark.ai/api/files/s/Ky9dAlDN" alt="Amity6 Logo" class="w-10 h-10 rounded-full">
-                <span class="text-xl font-bold tracking-tighter text-stone-900 font-serif">Amity6</span>
-            </div>
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="#about" class="hover:text-brand transition-colors">サービス</a>
-                <a href="#mvv" class="hover:text-brand transition-colors">想い</a>
-                <a href="#price" class="hover:text-brand transition-colors">料金</a>
-                <a href="#contact" class="bg-stone-900 text-white px-6 py-2.5 rounded-full hover:bg-stone-800 transition-all">お問い合わせ</a>
-            </div>
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-50 bg-brand-bg/90 backdrop-blur-md border-b border-brand-border transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="https://www.genspark.ai/api/files/s/Ky9dAlDN" alt="Amity6 Logo" class="h-10 w-10 object-contain rounded-full">
+                <span class="font-serif text-xl tracking-widest text-brand-text group-hover:opacity-70 transition-opacity">Amity6</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-8 text-sm tracking-widest">
+                <a href="#about" class="hover:text-brand-secondary transition-colors">サービスについて</a>
+                <a href="#mvv" class="hover:text-brand-secondary transition-colors">私たちの想い</a>
+                <a href="#plan" class="hover:text-brand-secondary transition-colors">プラン</a>
+            </nav>
+            <a href="#contact" class="hidden md:inline-flex border border-brand-text px-6 py-2.5 text-xs tracking-widest hover:bg-brand-text hover:text-white transition-colors duration-300">
+                ご相談はこちら
+            </a>
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-brand-text p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
         </div>
-    </nav>
+    </header>
 
-    <!-- 1. First View -->
-    <section class="relative pt-40 pb-24 px-6 overflow-hidden">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-                <div class="inline-block px-4 py-1.5 bg-pink-50 text-brand rounded-full text-xs font-bold mb-6 tracking-widest">
-                    FOR NURSING & WELFARE
-                </div>
-                <h1 class="text-4xl md:text-6xl font-bold leading-[1.2] mb-8 text-stone-900 font-serif">
-                    「人が辞めなくなる広報」を、<br>
-                    <span class="text-brand">介護福祉の現場へ。</span>
-                </h1>
-                <p class="text-lg text-stone-600 leading-relaxed mb-10 max-w-xl">
-                    現場にある「想い」を可視化し、次の世代へつなぐ。<br>
-                    私たちは、福祉施設の内側にある温かなストーリーを<br>
-                    映像と言葉で丁寧に切り取り、SNSで届けます。
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#contact" class="inline-flex items-center justify-center bg-brand text-white px-10 py-4 rounded-full text-lg font-bold hover:bg-brand-dark transition-all shadow-lg shadow-pink-100">
-                        無料で相談してみる
-                    </a>
-                    <a href="https://www.instagram.com/amity6_sns/" target="_blank" class="inline-flex items-center justify-center gap-2 border border-pink-200 text-brand px-10 py-4 rounded-full text-lg font-bold hover:bg-pink-50 transition-all">
-                        Instagramを見る
-                    </a>
-                </div>
+    <!-- 1. FV (First View) -->
+    <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 fade-in">
+        <div class="w-full md:w-1/2 z-10">
+            <h1 class="font-serif text-3xl md:text-4xl lg:text-5xl leading-[1.8] mb-8 text-brand-text">
+                <span class="block mb-2 text-brand-secondary text-lg md:text-xl tracking-widest font-sans">人が辞めなくなる広報を。</span>
+                福祉の想いを紡ぐ、<br>
+                SNSブランディング。
+            </h1>
+            <p class="text-sm md:text-base leading-loose mb-10 text-brand-muted max-w-md">
+                施設の日常や働く人のストーリーを、誠実に届ける。<br>
+                Amity6は、介護福祉業界に特化した<br class="hidden md:block">
+                SNS運用代行・ブランディングサービスです。
+            </p>
+            <a href="#contact" class="inline-flex items-center justify-center bg-brand-primary text-white px-8 py-4 text-sm tracking-widest hover:bg-brand-secondary transition-colors duration-300 w-full md:w-auto">
+                サービスについて相談する
+            </a>
+        </div>
+        <div class="w-full md:w-1/2 relative">
+            <div class="aspect-[4/5] md:aspect-square bg-brand-white rounded-sm overflow-hidden relative shadow-sm">
+                <!-- プレースホルダー画像：温かみのある抽象的な光と影 -->
+                <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=2500&auto=format&fit=crop" alt="温かい光" class="object-cover w-full h-full opacity-90">
+                <div class="absolute inset-0 bg-brand-primary mix-blend-multiply opacity-10"></div>
             </div>
-            <div class="relative">
-                <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
-                    <img src="https://picsum.photos/seed/care/800/1000" alt="介護現場の風景" class="w-full h-full object-cover">
+            <!-- 装飾的な円 -->
+            <div class="absolute -bottom-6 -left-6 w-32 h-32 rounded-full border border-brand-primary/30 -z-10"></div>
+        </div>
+    </section>
+
+    <!-- 2. お悩み -->
+    <section class="py-section bg-brand-white px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-[0.2em] text-brand-muted uppercase mb-4 block">Concerns</span>
+                <h2 class="font-serif text-2xl md:text-3xl">こんなもどかしさ、抱えていませんか？</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="p-8 border border-brand-border bg-brand-bg/50">
+                    <p class="text-brand-text leading-relaxed">
+                        「採用に力を入れているけれど、求職者に施設の本当の魅力や温かさが伝わりきっていない気がする」
+                    </p>
                 </div>
-                <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl max-w-[240px]">
-                    <p class="text-sm font-medium leading-relaxed font-serif">
-                        現場の空気感を、<br>そのまま資産に変える。
+                <div class="p-8 border border-brand-border bg-brand-bg/50">
+                    <p class="text-brand-text leading-relaxed">
+                        「現場の雰囲気や、職員が大切にしている想いを、もっと多くの人に知ってもらう場がほしい」
+                    </p>
+                </div>
+                <div class="p-8 border border-brand-border bg-brand-bg/50">
+                    <p class="text-brand-text leading-relaxed">
+                        「SNSを活用したいと考えているが、日々の業務が忙しく、何から始めればいいか迷っている」
+                    </p>
+                </div>
+                <div class="p-8 border border-brand-border bg-brand-bg/50">
+                    <p class="text-brand-text leading-relaxed">
+                        「せっかく入職してくれた職員が、理念のミスマッチにより離れてしまうことを減らしたい」
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 2. Problem -->
-    <section class="py-24 px-6 bg-stone-50">
-        <div class="max-w-4xl mx-auto text-center mb-16">
-            <h2 class="text-sm font-bold text-brand tracking-[0.2em] uppercase mb-4">Problem</h2>
-            <p class="text-3xl font-bold text-stone-900 font-serif">こんなお悩みありませんか？</p>
-        </div>
-        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
-            <div class="bg-white p-10 rounded-3xl shadow-sm">
-                <h3 class="text-xl font-bold mb-4 font-serif">採用がうまくいかない</h3>
-                <p class="text-stone-600 text-sm leading-relaxed">求人を出しても応募が来ない。自社の魅力が外部に伝わっていないと感じる。</p>
+    <!-- 3. サービスとは -->
+    <section id="about" class="py-section px-6 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center gap-16 md:gap-24">
+            <div class="w-full md:w-1/2 order-2 md:order-1">
+                <div class="aspect-[3/4] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1516726817505-f5ed825624d8?q=80&w=2000&auto=format&fit=crop" alt="語り合う姿" class="object-cover w-full h-full grayscale-[20%] opacity-90">
+                </div>
             </div>
-            <div class="bg-white p-10 rounded-3xl shadow-sm">
-                <h3 class="text-xl font-bold mb-4 font-serif">離職率が下がらない</h3>
-                <p class="text-stone-600 text-sm leading-relaxed">入職後のミスマッチが多い。現場の本当の良さを理解して入ってくる人が少ない。</p>
-            </div>
-            <div class="bg-white p-10 rounded-3xl shadow-sm">
-                <h3 class="text-xl font-bold mb-4 font-serif">発信の仕方がわからない</h3>
-                <p class="text-stone-600 text-sm leading-relaxed">SNSを始めたいが、何を投稿すればいいか、どう運用すればいいか分からない。</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. Service -->
-    <section id="about" class="py-24 px-6">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-                <h2 class="text-sm font-bold text-brand tracking-[0.2em] uppercase mb-4">Service</h2>
-                <p class="text-3xl md:text-4xl font-bold text-stone-900 mb-8 leading-tight font-serif">
-                    福祉の現場に特化した、<br>共感を生むSNSブランディング。
-                </p>
-                <p class="text-stone-600 mb-8">
-                    Amity6は、単なるSNSの投稿代行ではありません。私たちは現場に深く入り込み、働く方々の表情、施設の理念、そして日々の小さな感動を丁寧にすくい上げます。
-                </p>
-                <ul class="space-y-4">
-                    <li class="flex items-center gap-3 font-medium">
-                        <span class="text-brand">✔</span> Instagram / Threads の戦略的運用
-                    </li>
-                    <li class="flex items-center gap-3 font-medium">
-                        <span class="text-brand">✔</span> 現場の想いを引き出すインタビュー・撮影
-                    </li>
-                    <li class="flex items-center gap-3 font-medium">
-                        <span class="text-brand">✔</span> 共感を生むストーリーテリング
-                    </li>
-                </ul>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <img src="https://picsum.photos/seed/care1/400/500" class="rounded-2xl w-full h-64 object-cover" alt="">
-                <img src="https://picsum.photos/seed/care2/400/500" class="rounded-2xl w-full h-64 object-cover mt-8" alt="">
+            <div class="w-full md:w-1/2 order-1 md:order-2">
+                <span class="text-xs tracking-[0.2em] text-brand-muted uppercase mb-4 block">About Service</span>
+                <h2 class="font-serif text-2xl md:text-3xl leading-loose mb-8">
+                    施設に眠る「想い」を可視化し、<br>
+                    選ばれる理由を創る。
+                </h2>
+                <div class="space-y-6 text-sm md:text-base leading-loose text-brand-muted">
+                    <p>
+                        Amity6が提供するのは、単なるフォロワー獲得を目的としたSNS運用ではありません。私たちが目指すのは、「人が辞めなくなる広報」です。
+                    </p>
+                    <p>
+                        施設の中に当たり前にある優しい眼差し、理念に基づいた丁寧なケア、そして働く人々の誇り。<br>
+                        それらの見えにくい価値を、映像と言葉で丁寧に掬い上げ、InstagramやThreadsを通じて外部へと届けていきます。
+                    </p>
+                    <p>
+                        ありのままの姿を誠実に発信することで、共感する人材との出会いを創出し、同時に、今働いている職員が自分の職場をさらに誇りに思えるようなサイクルを生み出します。
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- 4. MVV -->
-    <section id="mvv" class="py-24 px-6 bg-pink-50/30">
-        <div class="max-w-7xl mx-auto">
+    <section id="mvv" class="py-section bg-brand-white px-6">
+        <div class="max-w-5xl mx-auto">
             <div class="text-center mb-20">
-                <h2 class="text-sm font-bold text-brand tracking-[0.2em] uppercase mb-4">Our Values</h2>
-                <p class="text-3xl font-bold text-stone-900 font-serif">私たちが大切にしていること</p>
+                <span class="text-xs tracking-[0.2em] text-brand-muted uppercase mb-4 block">Our Philosophy</span>
+                <h2 class="font-serif text-2xl md:text-3xl">私たちが大切にしていること</h2>
             </div>
-            <div class="grid md:grid-cols-2 gap-8 mb-16">
-                <div class="bg-white p-12 rounded-[40px]">
-                    <span class="text-brand font-bold text-xs tracking-widest uppercase block mb-4">Mission</span>
-                    <h3 class="text-xl font-bold mb-4 font-serif">介護福祉の現場にある思いを可視化し、次の世代へつなぐ。</h3>
+
+            <div class="space-y-24">
+                <!-- Mission & Vision -->
+                <div class="grid md:grid-cols-2 gap-12 md:gap-24 text-center md:text-left border-b border-brand-border pb-20">
+                    <div>
+                        <h3 class="text-xs tracking-[0.2em] text-brand-secondary uppercase mb-6">Mission</h3>
+                        <p class="font-serif text-xl md:text-2xl leading-relaxed">
+                            介護福祉の現場にある思いを可視化し、<br>
+                            次の世代へつなぐ。
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-xs tracking-[0.2em] text-brand-secondary uppercase mb-6">Vision</h3>
+                        <p class="font-serif text-xl md:text-2xl leading-relaxed">
+                            介護福祉が<br>
+                            選ばれる仕事になる社会を作る。
+                        </p>
+                    </div>
                 </div>
-                <div class="bg-white p-12 rounded-[40px]">
-                    <span class="text-brand font-bold text-xs tracking-widest uppercase block mb-4">Vision</span>
-                    <h3 class="text-xl font-bold mb-4 font-serif">介護福祉が選ばれる仕事になる社会を作る。</h3>
-                </div>
-            </div>
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="p-8 border border-pink-100 rounded-2xl">
-                    <p class="text-brand font-bold text-sm mb-4">Phase 1: 現場に向き合う</p>
-                    <p class="font-bold text-stone-800">1. 現場第一 / 2. 誠実な発信</p>
-                </div>
-                <div class="p-8 border border-pink-100 rounded-2xl">
-                    <p class="text-brand font-bold text-sm mb-4">Phase 2: 人に向き合う</p>
-                    <p class="font-bold text-stone-800">3. 想いを資産に変える / 4. 伴走する姿勢</p>
-                </div>
-                <div class="p-8 border border-pink-100 rounded-2xl">
-                    <p class="text-brand font-bold text-sm mb-4">Phase 3: 社会に向き合う</p>
-                    <p class="font-bold text-stone-800">5. 次世代への継承 / 6. 人が誇れる場所を作る</p>
+
+                <!-- Values -->
+                <div>
+                    <h3 class="text-center text-xs tracking-[0.2em] text-brand-muted uppercase mb-12">Value</h3>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <!-- Phase 1 -->
+                        <div class="bg-brand-bg/50 p-8">
+                            <span class="text-xs text-brand-secondary tracking-widest mb-4 block">フェーズ① 現場に向き合う</span>
+                            <ul class="space-y-4 font-serif text-lg">
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-primary"></span>
+                                    現場第一
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-primary"></span>
+                                    誠実な発信
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Phase 2 -->
+                        <div class="bg-brand-bg/50 p-8">
+                            <span class="text-xs text-brand-secondary tracking-widest mb-4 block">フェーズ② 人に向き合う</span>
+                            <ul class="space-y-4 font-serif text-lg">
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-primary"></span>
+                                    想いを資産に変える
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-primary"></span>
+                                    伴走する姿勢
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Phase 3 -->
+                        <div class="bg-brand-bg/50 p-8">
+                            <span class="text-xs text-brand-secondary tracking-widest mb-4 block">フェーズ③ 社会に向き合う</span>
+                            <ul class="space-y-4 font-serif text-lg">
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-primary"></span>
+                                    次世代への継承
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-brand-primary"></span>
+                                    人が誇れる場所を作る
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. Reasons -->
-    <section class="py-24 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                <h2 class="text-sm font-bold text-brand tracking-[0.2em] uppercase mb-4">Why Us</h2>
-                <p class="text-3xl font-bold text-stone-900 font-serif">選ばれる3つの理由</p>
+    <!-- 5. 選ばれる理由 -->
+    <section class="py-section px-6 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="text-xs tracking-[0.2em] text-brand-muted uppercase mb-4 block">Why Choose Us</span>
+            <h2 class="font-serif text-2xl md:text-3xl">Amity6の3つの特徴</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-12">
+            <!-- Reason 1 -->
+            <div class="group">
+                <div class="text-4xl font-serif text-brand-primary/40 mb-6 group-hover:text-brand-primary transition-colors">01.</div>
+                <h3 class="font-serif text-xl mb-4">内部の誇り作り</h3>
+                <p class="text-sm leading-loose text-brand-muted">
+                    外部へ魅力を伝えるだけでなく、発信を通じて職員自身が「自分たちの仕事の素晴らしさ」を再認識できるようなコンテンツを制作します。働く人のモチベーション向上と定着を支援します。
+                </p>
             </div>
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-pink-50 text-brand rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl">❤</div>
-                    <h3 class="text-xl font-bold mb-4 font-serif">内部の誇り作り</h3>
-                    <p class="text-stone-600 text-sm leading-relaxed">外部への発信は、スタッフが自社の良さを再認識する機会になります。現場の誇りを醸成します。</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-pink-50 text-brand rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl">🛡</div>
-                    <h3 class="text-xl font-bold mb-4 font-serif">ミスマッチ防止</h3>
-                    <p class="text-stone-600 text-sm leading-relaxed">現場のリアルな空気感を誠実に伝えます。理念に共感した人材が集まるため、定着率が向上します。</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-pink-50 text-brand rounded-2xl flex items-center justify-center mx-auto mb-6 text-2xl">🤝</div>
-                    <h3 class="text-xl font-bold mb-4 font-serif">共創スタイル</h3>
-                    <p class="text-stone-600 text-sm leading-relaxed">単なる代行業者ではなく、施設の皆様と同じ目線で現場に立ち、共にブランドを作る伴走者です。</p>
-                </div>
+            <!-- Reason 2 -->
+            <div class="group">
+                <div class="text-4xl font-serif text-brand-primary/40 mb-6 group-hover:text-brand-primary transition-colors">02.</div>
+                <h3 class="font-serif text-xl mb-4">ミスマッチの防止</h3>
+                <p class="text-sm leading-loose text-brand-muted">
+                    誇張した表現や見栄えだけを重視した発信は行いません。施設のありのままの文化や空気感を誠実に伝えることで、本当に施設と価値観の合う人材との出会いを創出します。
+                </p>
+            </div>
+            <!-- Reason 3 -->
+            <div class="group">
+                <div class="text-4xl font-serif text-brand-primary/40 mb-6 group-hover:text-brand-primary transition-colors">03.</div>
+                <h3 class="font-serif text-xl mb-4">共創スタイル</h3>
+                <p class="text-sm leading-loose text-brand-muted">
+                    作業を単に「丸投げ」していただくのではなく、施設の方々と対話を重ねながら、共に魅力を発掘していきます。伴走者として、現場の皆様の想いに寄り添います。
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- 6. Price -->
-    <section id="price" class="py-24 px-6 bg-stone-900 text-white rounded-[60px] mx-4 my-12">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-sm font-bold text-pink-400 tracking-[0.2em] uppercase mb-4">Price</h2>
-            <p class="text-3xl font-bold mb-16 font-serif">料金プラン</p>
-            <div class="max-w-xl mx-auto bg-white/10 p-12 rounded-[40px] border border-white/20">
-                <p class="text-pink-400 font-bold mb-4">企業SNSブランディングプラン</p>
-                <div class="text-5xl font-bold mb-4 font-serif">20<span class="text-xl">万円 / 月</span></div>
-                <p class="text-stone-400 mb-10">（初期費用：20万円）</p>
-                <ul class="text-left space-y-4 mb-10 text-stone-300 text-sm">
-                    <li>・Instagram / Threads 運用代行</li>
-                    <li>・月2〜4回の現場訪問・撮影</li>
-                    <li>・スタッフインタビュー・記事作成</li>
-                    <li>・毎月のレポート報告・改善提案</li>
-                </ul>
-                <a href="#contact" class="block w-full bg-white text-stone-900 py-4 rounded-full font-bold hover:bg-pink-50 transition-all">詳しく話を聞いてみる</a>
+    <!-- 6. プラン -->
+    <section id="plan" class="py-section bg-brand-white px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-[0.2em] text-brand-muted uppercase mb-4 block">Pricing</span>
+                <h2 class="font-serif text-2xl md:text-3xl">サービス内容・料金</h2>
+                <p class="mt-6 text-sm text-brand-muted">
+                    企業のSNSブランディングから運用代行まで、一貫してサポートいたします。<br>
+                    主要対応プラットフォーム：Instagram / Threads
+                </p>
+            </div>
+            
+            <div class="border border-brand-border p-8 md:p-12 bg-brand-bg/30">
+                <div class="flex flex-col md:flex-row justify-between items-center border-b border-brand-border pb-8 mb-8 gap-6">
+                    <div class="text-center md:text-left">
+                        <span class="block text-sm text-brand-muted mb-2">初期費用</span>
+                        <div class="font-serif text-3xl">200,000<span class="text-base font-sans ml-1">円</span></div>
+                    </div>
+                    <div class="hidden md:block w-px h-12 bg-brand-border"></div>
+                    <div class="text-center md:text-left">
+                        <span class="block text-sm text-brand-muted mb-2">月額費用</span>
+                        <div class="font-serif text-3xl">200,000<span class="text-base font-sans ml-1">円</span></div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-sm font-medium mb-4 tracking-widest">主なサポート内容</h4>
+                    <ul class="grid md:grid-cols-2 gap-4 text-sm text-brand-muted leading-relaxed">
+                        <li class="flex items-start gap-2">
+                            <span class="text-brand-primary mt-1">✓</span> アカウントコンセプト設計
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-brand-primary mt-1">✓</span> コンテンツ企画・台本作成
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-brand-primary mt-1">✓</span> 現場での写真・動画撮影
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-brand-primary mt-1">✓</span> 画像加工・動画編集
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-brand-primary mt-1">✓</span> 定期的な投稿代行
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-brand-primary mt-1">✓</span> 数値分析・改善提案ミーティング
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <a href="#contact" class="inline-flex items-center text-sm tracking-widest border-b border-brand-text pb-1 hover:text-brand-secondary hover:border-brand-secondary transition-colors">
+                    詳細な資料請求・ご相談はこちら <span class="ml-2">→</span>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- 7. About Us -->
-    <section class="py-24 px-6">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-            <img src="https://picsum.photos/seed/founders/800/800" alt="Founders" class="rounded-[40px] shadow-xl">
-            <div>
-                <h2 class="text-sm font-bold text-brand tracking-[0.2em] uppercase mb-4">About Us</h2>
-                <p class="text-3xl font-bold text-stone-900 mb-8 font-serif">現場を知る私たちだから、<br>伝えられることがあります。</p>
-                <p class="text-stone-600 mb-6">私たちは、大阪の精神障がい者向けグループホームでの勤務経験がある24歳、西宮出身の二人組です。</p>
-                <p class="text-stone-600 mb-8">福祉施設の内部にある想い、現場で働く方々のストーリーを映像と言葉で丁寧に切り取り、福祉・介護業界を「選ばれる業界」にしていきたいと考えています。</p>
-                <div class="p-6 bg-stone-50 rounded-2xl flex items-center gap-4">
-                    <span class="text-2xl">✨</span>
-                    <p class="text-sm font-bold">売上の3%を福祉活動へ寄付しています</p>
+    <!-- 7. 私たちについて -->
+    <section class="py-section px-6 max-w-5xl mx-auto">
+        <div class="flex flex-col md:flex-row items-start gap-16 md:gap-20">
+            <div class="w-full md:w-5/12">
+                <span class="text-xs tracking-[0.2em] text-brand-muted uppercase mb-4 block">About Us</span>
+                <h2 class="font-serif text-2xl md:text-3xl mb-8">
+                    現場を知るからこそ、<br>
+                    伝えられることがある。
+                </h2>
+                <!-- プレースホルダー画像：人物のシルエットや柔らかな風景 -->
+                <div class="aspect-[4/5] overflow-hidden bg-brand-border">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1500&auto=format&fit=crop" alt="私たちについて" class="object-cover w-full h-full grayscale opacity-80 mix-blend-multiply">
                 </div>
             </div>
+            <div class="w-full md:w-7/12 md:pt-24 space-y-6 text-sm md:text-base leading-loose text-brand-muted">
+                <p>
+                    Amity6を立ち上げた私たちは、西宮出身の24歳の二人組です。これまで、大阪の精神障がい者向けグループホームで職員として現場に立ってきました。
+                </p>
+                <p>
+                    現場で働く中で強く感じたのは、福祉施設の中には、外部からは見えにくい「温かい想い」や「尊いストーリー」がたくさん溢れているということです。<br>
+                    しかし同時に、それらが社会に十分に伝わっていないという歯がゆさも感じていました。
+                </p>
+                <p>
+                    施設の理念、独自の文化、そこで働く方々が作り出す優しい空気感。それらを映像と言葉で丁寧に切り取り、SNSというメディアを通じて外部へ届けていきたい。<br>
+                    その活動を通じて、福祉・介護業界を「誰もが誇りを持って選べる業界」にしていきたいと、私たちは本気で考えています。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. 社会貢献 -->
+    <section class="py-20 bg-brand-primary/10 px-6">
+        <div class="max-w-3xl mx-auto text-center">
+            <span class="text-xs tracking-[0.2em] text-brand-secondary uppercase mb-4 block">Social Contribution</span>
+            <h2 class="font-serif text-xl md:text-2xl mb-6 text-brand-text">福祉の輪を、少しずつ広げるために</h2>
+            <p class="text-sm leading-loose text-brand-muted">
+                Amity6では、事業活動を通じて得た売上の3%を、<br class="hidden md:block">
+                中央共同募金会、全国社会福祉協議会、子ども食堂などの活動へ寄付しております。<br>
+                サービスをご利用いただくことが、間接的に社会への還元につながる仕組みを大切にしています。
+            </p>
         </div>
     </section>
 
     <!-- 9. Instagram -->
-    <section class="py-24 px-6 bg-white">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-sm font-bold text-brand tracking-[0.2em] uppercase mb-4">Instagram</h2>
-            <p class="text-3xl font-bold text-stone-900 mb-12 font-serif">私たちの日常も発信しています</p>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                <div class="aspect-square bg-stone-100 rounded-2xl overflow-hidden"><img src="https://picsum.photos/seed/i1/500/500" class="w-full h-full object-cover" alt=""></div>
-                <div class="aspect-square bg-stone-100 rounded-2xl overflow-hidden"><img src="https://picsum.photos/seed/i2/500/500" class="w-full h-full object-cover" alt=""></div>
-                <div class="aspect-square bg-stone-100 rounded-2xl overflow-hidden"><img src="https://picsum.photos/seed/i3/500/500" class="w-full h-full object-cover" alt=""></div>
-                <div class="aspect-square bg-stone-100 rounded-2xl overflow-hidden"><img src="https://picsum.photos/seed/i4/500/500" class="w-full h-full object-cover" alt=""></div>
+    <section class="py-section px-6 max-w-4xl mx-auto text-center border-b border-brand-border">
+        <span class="text-xs tracking-[0.2em] text-brand-muted uppercase mb-4 block">Our Instagram</span>
+        <h2 class="font-serif text-2xl mb-8">等身大の私たちを発信しています</h2>
+        <p class="text-sm leading-loose text-brand-muted mb-10">
+            日々の活動の様子や、私たちが大切にしている考え方をInstagramでもお届けしています。<br>
+            もしよろしければ、少しだけ覗いてみてください。
+        </p>
+        <a href="https://www.instagram.com/amity6_sns/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-3 border border-brand-text text-sm tracking-widest hover:bg-brand-text hover:text-white transition-all duration-300">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+            </svg>
+            @amity6_sns を見る
+        </a>
+    </section>
+
+    <!-- 10. お問い合わせ -->
+    <section id="contact" class="py-section px-6">
+        <div class="max-w-2xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-[0.2em] text-brand-muted uppercase mb-4 block">Contact</span>
+                <h2 class="font-serif text-2xl md:text-3xl mb-6">ご相談・お問い合わせ</h2>
+                <p class="text-sm text-brand-muted">
+                    サービスに関するご質問や、現状の課題に関するご相談など、<br>
+                    まずはお気軽にお問い合わせください。
+                </p>
             </div>
-            <a href="https://www.instagram.com/amity6_sns/" target="_blank" class="inline-block border border-stone-200 px-8 py-3 rounded-full font-bold hover:bg-stone-50 transition-all">@amity6_sns をフォローする</a>
+            
+            <form class="space-y-8 bg-brand-white p-8 md:p-12 shadow-sm border border-brand-border">
+                <div>
+                    <label for="company" class="block text-sm text-brand-text mb-2 tracking-widest">法人名・施設名</label>
+                    <input type="text" id="company" class="w-full bg-transparent border-b border-brand-border py-2 focus:outline-none focus:border-brand-primary transition-colors" placeholder="例：株式会社〇〇 / 〇〇ホーム">
+                </div>
+                <div>
+                    <label for="name" class="block text-sm text-brand-text mb-2 tracking-widest">ご担当者名</label>
+                    <input type="text" id="name" class="w-full bg-transparent border-b border-brand-border py-2 focus:outline-none focus:border-brand-primary transition-colors" placeholder="例：山田 太郎">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm text-brand-text mb-2 tracking-widest">メールアドレス</label>
+                    <input type="email" id="email" class="w-full bg-transparent border-b border-brand-border py-2 focus:outline-none focus:border-brand-primary transition-colors" placeholder="例：info@example.com">
+                </div>
+                <div>
+                    <label for="message" class="block text-sm text-brand-text mb-2 tracking-widest">お問い合わせ内容</label>
+                    <textarea id="message" rows="5" class="w-full bg-transparent border border-brand-border p-3 focus:outline-none focus:border-brand-primary transition-colors resize-none mt-2" placeholder="ご相談内容をこちらにご記入ください。"></textarea>
+                </div>
+                <div class="text-center pt-4">
+                    <button type="button" class="bg-brand-text text-white px-12 py-4 text-sm tracking-widest hover:bg-brand-secondary transition-colors duration-300 w-full md:w-auto">
+                        送信する
+                    </button>
+                </div>
+            </form>
         </div>
     </section>
 
-    <!-- 10. Contact -->
-    <section id="contact" class="py-32 px-6 bg-stone-50 text-center">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold text-stone-900 mb-8 font-serif">まずは、あなたの施設の<br>「想い」を聞かせてください。</h2>
-            <p class="text-stone-600 mb-12">現状の課題や、これから作りたい未来について、ざっくばらんにお話ししませんか？誠実に向き合わせていただきます。</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#" class="bg-brand text-white px-12 py-5 rounded-full text-xl font-bold hover:bg-brand-dark transition-all shadow-xl shadow-pink-100">お問い合わせフォーム</a>
+    <!-- Footer -->
+    <footer class="bg-brand-white py-12 px-6 border-t border-brand-border text-center">
+        <div class="max-w-6xl mx-auto flex flex-col items-center gap-6">
+            <img src="https://www.genspark.ai/api/files/s/Ky9dAlDN" alt="Amity6 Logo" class="h-12 w-12 object-contain rounded-full grayscale opacity-70">
+            <div class="text-sm tracking-widest text-brand-muted space-x-4">
+                <a href="#" class="hover:text-brand-text transition-colors">運営会社</a>
+                <span>/</span>
+                <a href="#" class="hover:text-brand-text transition-colors">プライバシーポリシー</a>
             </div>
+            <p class="text-xs text-brand-muted/60 mt-4">&copy; 2024 Amity6. All rights reserved.</p>
         </div>
-    </section>
-
-    <footer class="py-12 px-6 text-center border-t border-stone-100 bg-white">
-        <p class="text-stone-400 text-sm">© 2026 Amity6. All rights reserved.</p>
     </footer>
 
+    <!-- スクロール時のヘッダー背景調整用スクリプト -->
     <script>
-        // Simple scroll animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('section').forEach(section => {
-            section.classList.add('fade-in');
-            observer.observe(section);
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-sm');
+            } else {
+                header.classList.remove('shadow-sm');
+            }
         });
     </script>
 </body>
